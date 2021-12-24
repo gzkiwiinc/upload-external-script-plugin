@@ -1,0 +1,38 @@
+{
+  "name": "upload-external-script-plugin",
+  "version": "0.1.0",
+  "description": "A webpack plugin for upload external script",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --declaration",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gzkiwiinc/upload-external-script-plugin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gzkiwiinc/upload-external-script-plugin/issues"
+  },
+  "homepage": "https://github.com/gzkiwiinc/upload-external-script-plugin#readme",
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "@types/ali-oss": "^6.16.2",
+    "@types/request-promise": "^4.1.48",
+    "@types/rimraf": "^3.0.2",
+    "typescript": "^4.5.4",
+    "webpack": "^5.65.0"
+  },
+  "dependencies": {
+    "ali-oss": "^6.16.0",
+    "chalk": "^4.1.2",
+    "request-promise": "^4.2.6",
+    "rimraf": "^3.0.2"
+  }
+}
