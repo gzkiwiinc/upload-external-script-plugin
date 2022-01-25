@@ -32,7 +32,6 @@ export default class UploadExternalScriptPlugin
 {
     option: IOption; // plugin option
     client: OSS; // ali-oss client
-    authExpiration: number;
 
     constructor(option: IOption)
     {
@@ -83,18 +82,24 @@ export default class UploadExternalScriptPlugin
 
     async initClient()
     {
-        if (!this.client || Date.now() > this.authExpiration)
+        if (!this.client)
         {
-            const { region, accessKeyId, accessKeySecret, securityToken, expiration } = await requestOSSData();
+            const { region, accessKeyId, accessKeySecret, securityToken } = await requestOSSData();
             this.client = new OSS({
 				region: region,
 				accessKeyId: accessKeyId,
 				accessKeySecret: accessKeySecret,
 				bucket: BUCKET_NAME,
 				stsToken: securityToken,
-                timeout: 60 * 10 * 1000
+                timeout: 60 * 10 * 1000,
+                refreshSTSToken: async () => {
+                    const { accessKeyId, accessKeySecret, securityToken } = await requestOSSData();
+                    return {
+                        accessKeyId, accessKeySecret, stsToken: securityToken
+                    }
+                },
+                refreshSTSTokenInterval: 50 * 60 * 1000 // 后端的过期时间是60分钟，这里设置为50分钟
 			});
-            this.authExpiration = expiration
         }
     }
 
@@ -197,7 +202,8 @@ interface IOSSAuthData
     accessKeyId: string;
     accessKeySecret: string;
     securityToken: string;
-    expiration: number;
+    // 过期时间 YYYY-MM-DDTHH:mm:ssZ
+    expiration: string;
 }
 
 async function requestOSSData()

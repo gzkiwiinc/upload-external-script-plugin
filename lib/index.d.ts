@@ -11,7 +11,6 @@ interface ILib {
 export default class UploadExternalScriptPlugin {
     option: IOption;
     client: OSS;
-    authExpiration: number;
     constructor(option: IOption);
     apply(compiler: Compiler): void;
     uploadLib(dist: string, lib: ILib): Promise<void>;

@@ -1,12 +1,12 @@
 {
   "name": "upload-external-script-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A webpack plugin for upload external script",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --declaration",
+    "build": "rm -r lib || true && tsc --declaration",
     "prepublish": "npm run build"
   },
   "repository": {
